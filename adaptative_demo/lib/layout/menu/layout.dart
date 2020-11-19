@@ -1,4 +1,5 @@
 import 'package:adaptative_demo/layout/menu/style.dart';
+import 'package:adaptative_demo/localization/delegate.dart';
 import 'package:adaptative_demo/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -56,6 +57,8 @@ class TopBarWithSections extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = AdaptativeTheme.of(context);
     final style = MenuStyle.of(context);
+    final localizations = Localizations.of<AdaptativeLocalization>(
+        context, AdaptativeLocalization);
     return AnimatedContainer(
       duration: theme.durations.regular,
       color: style.barBackgroundColor,
@@ -74,7 +77,7 @@ class TopBarWithSections extends StatelessWidget {
                   Logo(),
                   Spacer(),
                   TabButton(
-                    title: 'News',
+                    title: localizations.menuNewsTabTitle,
                     isSelected: false,
                   ),
                   SizedBox(
@@ -82,7 +85,7 @@ class TopBarWithSections extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.centerRight,
                       child: TabButton(
-                        title: 'About',
+                        title: localizations.menuAboutTabTitle,
                         isSelected: false,
                       ),
                     ),
@@ -177,17 +180,19 @@ class Tabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizations = Localizations.of<AdaptativeLocalization>(
+        context, AdaptativeLocalization);
     return Row(
       mainAxisAlignment:
           spaceEvenly ? MainAxisAlignment.spaceEvenly : MainAxisAlignment.end,
       children: [
         TabButton(
-          title: 'News',
+          title: localizations.menuNewsTabTitle,
           isSelected: selectedTab == 0,
           onTap: () => onTabSelected(0),
         ),
         TabButton(
-          title: 'About',
+          title: localizations.menuAboutTabTitle,
           isSelected: selectedTab == 1,
           onTap: () => onTabSelected(1),
         ),

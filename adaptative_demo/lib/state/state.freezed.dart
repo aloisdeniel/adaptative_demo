@@ -15,9 +15,12 @@ class _$ApplicationStateTearOff {
 
 // ignore: unused_element
   _ApplicationState call(
-      {@required NewsApi api, NewsState news = const NewsState.notLoaded()}) {
+      {@required NewsApi api,
+      ConnectivityResult connectivity = ConnectivityResult.mobile,
+      NewsState news = const NewsState.notLoaded()}) {
     return _ApplicationState(
       api: api,
+      connectivity: connectivity,
       news: news,
     );
   }
@@ -30,6 +33,7 @@ const $ApplicationState = _$ApplicationStateTearOff();
 /// @nodoc
 mixin _$ApplicationState {
   NewsApi get api;
+  ConnectivityResult get connectivity;
   NewsState get news;
 
   $ApplicationStateCopyWith<ApplicationState> get copyWith;
@@ -40,7 +44,7 @@ abstract class $ApplicationStateCopyWith<$Res> {
   factory $ApplicationStateCopyWith(
           ApplicationState value, $Res Function(ApplicationState) then) =
       _$ApplicationStateCopyWithImpl<$Res>;
-  $Res call({NewsApi api, NewsState news});
+  $Res call({NewsApi api, ConnectivityResult connectivity, NewsState news});
 
   $NewsStateCopyWith<$Res> get news;
 }
@@ -57,10 +61,14 @@ class _$ApplicationStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object api = freezed,
+    Object connectivity = freezed,
     Object news = freezed,
   }) {
     return _then(_value.copyWith(
       api: api == freezed ? _value.api : api as NewsApi,
+      connectivity: connectivity == freezed
+          ? _value.connectivity
+          : connectivity as ConnectivityResult,
       news: news == freezed ? _value.news : news as NewsState,
     ));
   }
@@ -83,7 +91,7 @@ abstract class _$ApplicationStateCopyWith<$Res>
           _ApplicationState value, $Res Function(_ApplicationState) then) =
       __$ApplicationStateCopyWithImpl<$Res>;
   @override
-  $Res call({NewsApi api, NewsState news});
+  $Res call({NewsApi api, ConnectivityResult connectivity, NewsState news});
 
   @override
   $NewsStateCopyWith<$Res> get news;
@@ -103,10 +111,14 @@ class __$ApplicationStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object api = freezed,
+    Object connectivity = freezed,
     Object news = freezed,
   }) {
     return _then(_ApplicationState(
       api: api == freezed ? _value.api : api as NewsApi,
+      connectivity: connectivity == freezed
+          ? _value.connectivity
+          : connectivity as ConnectivityResult,
       news: news == freezed ? _value.news : news as NewsState,
     ));
   }
@@ -115,19 +127,25 @@ class __$ApplicationStateCopyWithImpl<$Res>
 /// @nodoc
 class _$_ApplicationState implements _ApplicationState {
   const _$_ApplicationState(
-      {@required this.api, this.news = const NewsState.notLoaded()})
+      {@required this.api,
+      this.connectivity = ConnectivityResult.mobile,
+      this.news = const NewsState.notLoaded()})
       : assert(api != null),
+        assert(connectivity != null),
         assert(news != null);
 
   @override
   final NewsApi api;
+  @JsonKey(defaultValue: ConnectivityResult.mobile)
+  @override
+  final ConnectivityResult connectivity;
   @JsonKey(defaultValue: const NewsState.notLoaded())
   @override
   final NewsState news;
 
   @override
   String toString() {
-    return 'ApplicationState(api: $api, news: $news)';
+    return 'ApplicationState(api: $api, connectivity: $connectivity, news: $news)';
   }
 
   @override
@@ -136,6 +154,9 @@ class _$_ApplicationState implements _ApplicationState {
         (other is _ApplicationState &&
             (identical(other.api, api) ||
                 const DeepCollectionEquality().equals(other.api, api)) &&
+            (identical(other.connectivity, connectivity) ||
+                const DeepCollectionEquality()
+                    .equals(other.connectivity, connectivity)) &&
             (identical(other.news, news) ||
                 const DeepCollectionEquality().equals(other.news, news)));
   }
@@ -144,6 +165,7 @@ class _$_ApplicationState implements _ApplicationState {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(api) ^
+      const DeepCollectionEquality().hash(connectivity) ^
       const DeepCollectionEquality().hash(news);
 
   @override
@@ -152,11 +174,15 @@ class _$_ApplicationState implements _ApplicationState {
 }
 
 abstract class _ApplicationState implements ApplicationState {
-  const factory _ApplicationState({@required NewsApi api, NewsState news}) =
-      _$_ApplicationState;
+  const factory _ApplicationState(
+      {@required NewsApi api,
+      ConnectivityResult connectivity,
+      NewsState news}) = _$_ApplicationState;
 
   @override
   NewsApi get api;
+  @override
+  ConnectivityResult get connectivity;
   @override
   NewsState get news;
   @override

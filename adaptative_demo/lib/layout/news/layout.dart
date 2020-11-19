@@ -1,9 +1,11 @@
 import 'package:adaptative_demo/layout/news/style.dart';
+import 'package:adaptative_demo/localization/delegate.dart';
 import 'package:adaptative_demo/services/news_api.dart';
 import 'package:adaptative_demo/state/news/actions.dart';
 import 'package:adaptative_demo/state/state.dart';
 import 'package:adaptative_demo/state/store.dart';
 import 'package:adaptative_demo/layout/helpers.dart';
+import 'package:adaptative_demo/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -68,7 +70,10 @@ class _RefreshForLocaleState extends State<_RefreshForLocale> {
 
   @override
   void didUpdateWidget(covariant _RefreshForLocale oldWidget) {
-    if (oldWidget.country != widget.country) _refreshIfNeeded();
+    if (oldWidget.country != widget.country)
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        _refreshIfNeeded();
+      });
     super.didUpdateWidget(oldWidget);
   }
 
@@ -175,8 +180,20 @@ class NewsLoadingFailedLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: CircularProgressIndicator(),
+    final theme = AdaptativeTheme.of(context);
+    final localizations = Localizations.of<AdaptativeLocalization>(
+        context, AdaptativeLocalization);
+    return Padding(
+      padding: theme.insets.big,
+      child: Center(
+        child: Text(
+          localizations.newsErrorMessage,
+          style: theme.text.big.copyWith(
+            color: Colors.red,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
     );
   }
 }
